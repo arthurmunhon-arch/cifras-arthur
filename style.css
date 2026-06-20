@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0b0f19;
+}
+
+.navbar {
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.chord {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+.lyrics {
+    font-family: 'Inter', sans-serif;
+}
+
+.font-neon {
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+/* Área de Leitura Padrão - Focada em Rolagem Fluida e Confortável */
+#chordSheet {
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: auto; 
+    padding-bottom: 120px; 
+}
+
+/* Modo Palco com Rolagem Nativa Habilitada */
+#stageMode {
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+}
+
+#stageMode pre {
+    line-height: 1.6 !important;
+    padding-bottom: 350px; /* Garante que a música suba por completo até sumir no topo ao rolar */
+}
+
+/* Botões Interativos */
+#btnSetDomingo, #btnSetQuarta, #btnSetNenhum, #btnAutoScroll, #btnStageScroll, select {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Customização de Scrollbars do Tablet */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Cifras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-200 min-h-screen flex flex-col">
+
+    <nav class="navbar sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('dashboard')">
+            <div class="p-2 bg-blue-600/10 rounded-lg border border-blue-500/30 text-blue-400">
+                <i data-lucide="music"></i>
+            </div>
+            <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                Biblioteca de <span class="text-blue-400 font-neon">Cifras</span>
+            </span>
+        </div>
+        <div>
+            <button onclick="openNewSongForm()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-600/20">
+                <i data-lucide="plus" class="w-4 h-4"></i> Nova Música
+            </button>
+        </div>
+    </nav>
+
+    <main class="flex-1 p-6 max-w-7xl w-full mx-auto">
+
+        <section id="sec-dashboard" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/40 p-6 rounded-2xl border border-slate-800/60">
+                <div>
+                    <h1 class="text-2xl font-bold text-white flex items-center gap-2">Olá, Ministro! 🎹</h1>
+                    <p class="text-sm text-slate-400 mt-1">Busque uma música ou filtre pelos repertórios da semana.</p>
+                </div>
+                <div class="relative w-full md:w-96">
+                    <i data-lucide="search" class="absolute left-4 top-3.5 text-slate-400 w-5 h-5"></i>
+                    <input type="text" id="searchInput" oninput="filterSongs()" placeholder="Buscar por título ou artista..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-slate-200 transition-colors">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div class="space-y-6 lg:col-span-1">
+                    <div class="bg-slate-900/30 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                        <h3 class="font-semibold text-sm uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-blue-400"></i> Filtros
+                        </h3>
+                        <div>
+                            <select id="filterTone" onchange="filterSongs()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-300 focus:outline-none focus:border-blue-500">
+                                <option value="">Todos os Tons</option>
+                                <option value="C">C</option><option value="C#">C#</option><option value="D">D</option><option value="D#">D#</option>
+                                <option value="E">E</option><option value="F">F</option><option value="F#">F#</option><option value="G">G</option>
+                                <option value="G#">G#</option><option value="A">A</option><option value="A#">A#</option><option value="B">B</option>
+                                <option value="Cm">Cm</option><option value="C#m">C#m</option><option value="Dm">Dm</option><option value="D#m">D#m</option>
+                                <option value="Em">Em</option><option value="Fm">Fm</option><option value="F#m">F#m</option><option value="Gm">Gm</option>
+                                <option value="G#m">G#m</option><option value="Am">Am</option><option value="A#m">A#m</option><option value="Bm">Bm</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/30 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-sm uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                                <i data-lucide="calendar" class="w-4 h-4 text-blue-400"></i> Escala da Semana
+                            </h3>
+                            <button onclick="resetRepertoireFilter()" class="text-[10px] text-blue-400 hover:underline">Ver Todas</button>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <button onclick="filterByRepertoire('Culto Domingo')" class="w-full text-left p-3 rounded-xl bg-slate-950/50 hover:bg-slate-800/50 border border-slate-800 flex justify-between items-center group transition-all">
+                                <span>Culto Domingo</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+                            </button>
+                            <button onclick="filterByRepertoire('Culto Quarta')" class="w-full text-left p-3 rounded-xl bg-slate-950/50 hover:bg-slate-800/50 border border-slate-800 flex justify-between items-center group transition-all">
+                                <span>Culto Quarta</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 space-y-6">
+                    <h2 id="sectionListTitle" class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="layers" class="w-5 h-5 text-blue-400"></i> Todas as Músicas
+                    </h2>
+                    <div id="songsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-view" class="hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900/60 p-4 rounded-xl border border-slate-800 sticky top-20 z-30 backdrop-blur-md">
+                <div class="flex items-center gap-4">
+                    <button onclick="showSection('dashboard')" class="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 id="viewTitle" class="text-xl font-bold text-white">Título</h2>
+                        <p id="viewArtist" class="text-xs text-slate-400">Artista</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="bg-slate-950 border border-slate-800 rounded-lg flex items-center p-1 gap-1">
+                        <button id="btnAutoScroll" onclick="toggleAutoScroll(false)" class="flex items-center gap-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 px-2.5 py-1.5 rounded text-xs font-semibold transition-all">
+                            <i data-lucide="play" class="w-3.5 h-3.5"></i> Rolar
+                        </button>
+                        <select id="scrollSpeed" onchange="changeSpeed()" class="bg-slate-900 border border-slate-800 rounded px-1.5 py-1 text-[11px] text-slate-300 font-medium focus:outline-none">
+                            <option value="60">Lenta</option>
+                            <option value="40" selected>Média</option>
+                            <option value="20">Rápida</option>
+                        </select>
+                    </div>
+                    
+                    <div class="bg-slate-950 border border-slate-800 rounded-lg flex items-center p-1 gap-1">
+                        <button onclick="adjustFont(-2)" class="p-1.5 hover:bg-slate-800 rounded text-slate-400 hover:text-white"><i data-lucide="minus" class="w-4 h-4"></i></button>
+                        <span class="text-xs px-2 font-mono text-slate-400">FONTE</span>
+                        <button onclick="adjustFont(2)" class="p-1.5 hover:bg-slate-800 rounded text-slate-400 hover:text-white"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                    </div>
+                    
+                    <button onclick="toggleStageMode()" class="flex items-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 px-3 py-2 rounded-lg text-sm font-medium transition-all">
+                        <i data-lucide="tv"></i> Modo Palco
+                    </button>
+                    <button onclick="toggleFavoriteCurrent()" id="btnFav" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300"><i data-lucide="star" class="w-5 h-5"></i></button>
+                    <button onclick="editCurrentSong()" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300"><i data-lucide="edit" class="w-5 h-5"></i></button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800/60 text-center flex flex-col justify-center">
+                    <span class="block text-xs text-slate-500 uppercase font-medium mb-1">Tom Principal</span>
+                    <span id="viewTone" class="text-2xl font-bold text-blue-400">--</span>
+                </div>
+                <div class="bg-slate-900/30 p-4 rounded-xl border border-slate-800/60 text-center md:col-span-2">
+                    <span class="block text-xs text-slate-500 uppercase font-medium mb-2">Escalar esta música para:</span>
+                    <div class="flex justify-center gap-3">
+                        <button id="btnSetDomingo" onclick="updateSongRepertoire('Culto Domingo')" class="px-4 py-1.5 text-xs font-semibold rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-all">Culto Domingo</button>
+                        <button id="btnSetQuarta" onclick="updateSongRepertoire('Culto Quarta')" class="px-4 py-1.5 text-xs font-semibold rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-all">Culto Quarta</button>
+                        <button id="btnSetNenhum" onclick="updateSongRepertoire('Nenhum')" class="px-4 py-1.5 text-xs font-semibold rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-all">Retirar da Escala</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/20 border border-slate-800/60 rounded-2xl p-6 overflow-x-auto">
+                <pre id="chordSheet" class="whitespace-pre font-mono text-base tracking-wide leading-relaxed text-slate-300"></pre>
+            </div>
+        </section>
+
+        <section id="sec-admin" class="hidden max-w-2xl mx-auto bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl space-y-6">
+            <div>
+                <h2 id="adminTitle" class="text-xl font-bold text-white">Adicionar Nova Música</h2>
+                <p class="text-xs text-slate-400 mt-1">Preencha os campos essenciais para salvar a cifra.</p>
+            </div>
+            <form id="songForm" onsubmit="saveSong(event)" class="space-y-4">
+                <input type="hidden" id="editId">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Título da Música *</label>
+                        <input type="text" id="formTitle" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Tom *</label>
+                        <input type="text" id="formTone" placeholder="Ex: E" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Artista / Ministério *</label>
+                    <input type="text" id="formArtist" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Cifra Completa *</label>
+                    <textarea id="formChords" rows="12" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm font-mono text-white whitespace-pre focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="showSection('dashboard')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-medium transition-colors">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-medium transition-colors">Salvar Cifra</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="stageMode" class="hidden fixed inset-0 bg-black z-50 overflow-y-auto p-8 flex flex-col">
+        <div class="w-full bg-slate-900/90 border border-slate-800 p-3 rounded-xl flex justify-between items-center shadow-2xl mb-4">
+            <div>
+                <h1 id="stageTitle" class="text-2xl font-bold text-white inline-block mr-2">Título</h1>
+                <span id="stageTone" class="text-xl font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">--</span>
+                <p id="stageArtist" class="text-xs text-slate-400">Artista</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-950 border border-slate-800 rounded-lg flex items-center p-1 gap-1">
+                    <button id="btnStageScroll" onclick="toggleAutoScroll(true)" class="flex items-center gap-1 bg-amber-500/20 hover:bg-amber-500 text-amber-400 hover:text-white px-3 py-1.5 rounded text-xs font-semibold transition-all">
+                        <i data-lucide="play" class="w-3.5 h-3.5"></i> Rolar
+                    </button>
+                    <select id="stageScrollSpeed" onchange="changeSpeed(true)" class="bg-slate-900 border border-slate-800 rounded px-1.5 py-1 text-[11px] text-slate-300 font-medium focus:outline-none">
+                        <option value="60">Lenta</option>
+                        <option value="40" selected>Média</option>
+                        <option value="20">Rápida</option>
+                    </select>
+                </div>
+                <button onclick="toggleStageMode()" class="p-2 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1"><i data-lucide="x" class="w-4 h-4"></i> Sair</button>
+            </div>
+        </div>
+
+        <div class="w-full bg-neutral-950 rounded-2xl p-6 mt-2">
+            <pre id="stageSheet" class="w-full whitespace-pre font-mono font-bold tracking-wide leading-relaxed text-white m-0"></pre>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
