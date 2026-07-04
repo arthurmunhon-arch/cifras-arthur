@@ -23,10 +23,6 @@ This project was developed to improve web development skills while creating a pr
 
 🚧 Project in development.
 
-## 📷 Preview
-
-(Add screenshots here)
-
 ## 👨‍💻 Author
 
 Arthur
